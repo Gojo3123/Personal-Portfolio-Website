@@ -1,0 +1,97 @@
+rules_version = '2';
+
+// Firestore security rules for the portfolio app.
+// - Public visitors can READ public content and CREATE contact messages.
+// - Only admins can WRITE content.
+// - Public signups can never grant themselves the admin role.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function userDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && userDoc().role == 'admin';
+    }
+
+    // ---------- user profiles ----------
+    match /users/{userId} {
+      // Users read their own profile; admins read everyone.
+      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+
+      // You may only create YOUR OWN profile, and role must be 'user'.
+      // (Admins are promoted manually — never through public signup.)
+      allow create: if isSignedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role == 'user';
+
+      // Users may edit their own doc but can never change their role.
+      allow update: if isAdmin() || (
+        isSignedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role == resource.data.role
+      );
+
+      allow delete: if isAdmin();
+    }
+
+    // ---------- public content: read-only for visitors ----------
+    match /profile/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /skills/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /projects/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /education/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /certificates/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /achievements/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ---------- contact messages ----------
+    match /messages/{messageId} {
+      // Anyone may submit a message with the required fields.
+      allow create: if request.resource.data.keys().hasAll(['name', 'email', 'subject', 'message'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 120
+        && request.resource.data.email is string
+        && request.resource.data.subject is string
+        && request.resource.data.subject.size() <= 200
+        && request.resource.data.message is string
+        && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() <= 5000;
+
+      // Only admins can read, update (mark read) or delete messages.
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}
