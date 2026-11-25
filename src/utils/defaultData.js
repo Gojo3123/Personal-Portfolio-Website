@@ -11,7 +11,7 @@ export const defaultProfile = {
   intro:
     'Full-stack developer from India who loves turning complex problems into clean, elegant products. I work primarily with React, Node.js and Firebase, and I care deeply about performance, accessibility and detail.',
   location: 'Vijayawada, India',
-  email: '2500032739@kluniversity.in',
+  email: '2500030575@kluniversity.in',
   phone: '+91 98765 43210',
   avatar: '/deepak-raj.jpg',
   resumeUrl: '',
@@ -41,7 +41,7 @@ export const defaultSettings = {
   tagline: 'Full-Stack Developer & UI/UX Enthusiast',
   footerText:
     'Crafting premium web experiences with React, Firebase and a strong eye for design. Available for freelance and full-time opportunities.',
-  contactEmail: '2500032739@kluniversity.in',
+  contactEmail: '2500030575@kluniversity.in',
   socials: {
     github: 'https://github.com/dashboard',
     linkedin: 'https://www.linkedin.com/feed/',

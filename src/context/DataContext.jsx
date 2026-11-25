@@ -29,7 +29,7 @@ function replaceLegacyIdentity(value) {
       .replace(/\bgautam kumar\b/g, 'Deepak Kumar')
       .replace(/\bI'm Gautam\b/g, "I'm Deepak")
       .replace(/\bGautam\b/g, 'Deepak')
-      .replace(/gautam\.kumar@example\.com/gi, '2500032739@kluniversity.in')
+      .replace(/gautam\.kumar@example\.com/gi, '2500030575@kluniversity.in')
       .replace(/^https?:\/\/github\.com\/gautamkumar\/?$/gi, 'https://github.com/dashboard')
       .replace(/^https?:\/\/(?:www\.)?linkedin\.com\/in\/gautamkumar\/?$/gi, 'https://www.linkedin.com/feed/')
       .replace(/^https?:\/\/(?:x\.com\/gautamkumar|twitter\.com\/gautamkumar)\/?$/gi, 'https://x.com/home?lang=en')
@@ -50,7 +50,7 @@ function loadLocalData() {
     const parsed = replaceLegacyIdentity(JSON.parse(raw))
     if (parsed.profile) {
       parsed.profile.avatar = '/deepak-raj.jpg'
-      parsed.profile.email = '2500032739@kluniversity.in'
+      parsed.profile.email = '2500030575@kluniversity.in'
       parsed.profile.socials = {
         ...(parsed.profile.socials || {}),
         github: 'https://github.com/dashboard',
@@ -59,7 +59,7 @@ function loadLocalData() {
       }
     }
     if (parsed.settings) {
-      parsed.settings.contactEmail = '2500032739@kluniversity.in'
+      parsed.settings.contactEmail = '2500030575@kluniversity.in'
       parsed.settings.socials = {
         ...(parsed.settings.socials || {}),
         github: 'https://github.com/dashboard',
@@ -118,7 +118,7 @@ export function DataProvider({ children }) {
         profileSnap.exists() ? { ...defaults.profile, ...profileSnap.data() } : defaults.profile
       )
       next.profile.avatar = '/deepak-raj.jpg'
-      next.profile.email = '2500032739@kluniversity.in'
+      next.profile.email = '2500030575@kluniversity.in'
       next.profile.socials = {
         ...(next.profile.socials || {}),
         github: 'https://github.com/dashboard',
@@ -128,7 +128,7 @@ export function DataProvider({ children }) {
       next.settings = replaceLegacyIdentity(
         settingsSnap.exists() ? { ...defaults.settings, ...settingsSnap.data() } : defaults.settings
       )
-      next.settings.contactEmail = '2500032739@kluniversity.in'
+      next.settings.contactEmail = '2500030575@kluniversity.in'
       next.settings.socials = {
         ...(next.settings.socials || {}),
         github: 'https://github.com/dashboard',
